@@ -9,7 +9,7 @@ int MATRIZ_FORJADA[6][6] = {
     {1, 0, 1, 0, 1, 0},
     {0, 1, 0, 1, 0, 1},
     {1, 0, 1, 0, 1, 0},
-    {0, 1, 0, 1, 0, 1},
+    {0, 1, 0, 1, 0, 0},
 };
 
 char isReflexive()
@@ -46,26 +46,44 @@ int **getReflexivePairs()
     return reflexivePairs;
 }
 
-char isSymmetric()
+int **isSymmetric()
 {
-    char isSymmetric = 'V';
+    int **t;
+    t = (int **)malloc(sizeof(int *) * FORJADA_LENGTH);
     for (int i = 0; i < FORJADA_LENGTH; i++)
     {
-        if (isSymmetric != 'V')
-        {
-            break;
-        }
+        t[i] = (int *)malloc(sizeof(int) * 6);
+    }
+
+    for (int i = 0; i < FORJADA_LENGTH; i++)
+    {
+        // if (isSymmetric != 'V')
+        // {
+        //     break;
+        // }
         for (int j = 0; j < FORJADA_LENGTH; j++)
         {
-            if (MATRIZ_FORJADA[i][j] == 1 && MATRIZ_FORJADA[i][j] != MATRIZ_FORJADA[j][i])
+            if (i != j && MATRIZ_FORJADA[i][j] != MATRIZ_FORJADA[j][i])
             {
-                printf("i = %d, j = %d", i, j);
-                isSymmetric = 'F';
-                break;
+                t[i][j] = 1;
+                printf("inOne %d, %d \n", i, j);
+                continue;
             }
+            else if (i == j)
+            {
+                if (MATRIZ_FORJADA[i][j] != 1)
+                {
+                t[i][j] = 1;
+                    printf("inTwo %d, %d \n", i, j);
+                    continue;
+                }
+            }
+            printf("inThree %d, %d \n", i, j);
+            t[i][j] = -1;
+            // t[i][1] = -1;
         }
     }
-    return isSymmetric;
+    return t;
 }
 
 int main()
@@ -78,12 +96,46 @@ int main()
         printf("(");
         for (int j = 0; j < 2; j++)
         {
-            printf("%d", reflexivePairs[i][j]);
+            j == 0 ? printf("%d,", reflexivePairs[i][j]) : printf("%d", reflexivePairs[i][j]);
         }
-        printf("), ");
+        printf("); ");
     }
 
     printf("\n");
-    char symmetric = isSymmetric();
-    printf("\n%c\n", symmetric);
+    char isSymetric = 'V';
+    int **symetricValues = isSymmetric();
+    for (int i = 0; i < FORJADA_LENGTH; i++)
+    {
+        if (isSymetric != 'V')
+        {
+            break;
+        }
+        for (int j = 0; j < 2; j++)
+        {
+            if (symetricValues[i][j] != -1)
+            {
+                isSymetric = 'F';
+                break;
+            }
+        }
+    }
+    printf("Anti Symetrical Pairs: ");
+    for (int i = 0; i < FORJADA_LENGTH; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (symetricValues[i][j] != -1)
+            {
+                printf("(");
+                // printf("%d, i:%d j:%d", symetricValues[i][j], i, j);
+                int newX = NODES_FORJADOS[i];
+                int newY = NODES_FORJADOS[j];
+                printf("%d,", newX);
+                printf("%d", newY);
+                printf("); ");
+                printf("\n");
+            }
+        }
+    }
+    // printf("\n%c\n", symmetric);
 }
