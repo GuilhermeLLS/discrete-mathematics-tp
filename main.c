@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 char isReflexive(int **matrix, int matrixLength)
 {
     char isReflexive = 'V';
@@ -44,7 +43,7 @@ int **resolveSymmetryMatrix(int **matrix, int matrixLength)
     aux = (int **)malloc(sizeof(int *) * matrixLength);
     for (int i = 0; i < matrixLength; i++)
     {
-        aux[i] = (int *)malloc(sizeof(int) * 6);
+        aux[i] = (int *)malloc(sizeof(int) * matrixLength);
     }
     // AS POSICOES QUE AFETAM A CONDICAO SE SIMETRIA, SAO MARCADAS COM -1
     // AS POSICOES QUE AFETAM A CONDICAO DE ANTI SIMETRIA SAO MARCADAS COM -2
@@ -95,13 +94,13 @@ void *resolveSymmetryCases(int **symmetricMatrix, int matrixLength, char *cases)
     }
 }
 
-void printPairs(int **symmetric, int value, int *nodeIdentifiers)
+void printPairs(int **matrix, int value, int *nodeIdentifiers, int matrixLength)
 {
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < matrixLength; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < matrixLength; j++)
         {
-            if (symmetric[i][j] == value)
+            if (matrix[i][j] == value)
             {
                 printf("(");
                 int newX = nodeIdentifiers[i];
@@ -115,7 +114,7 @@ void printPairs(int **symmetric, int value, int *nodeIdentifiers)
     printf("\n");
 }
 
-void printSymmetryCases(int **symmetric, char *cases, int *nodeIdentifiers)
+void printSymmetryCases(int **symmetric, char *cases, int *nodeIdentifiers, int matrixLength)
 {
     char isSymmetric = cases[0];
     char isAntiSymmetric = cases[1];
@@ -124,14 +123,14 @@ void printSymmetryCases(int **symmetric, char *cases, int *nodeIdentifiers)
     {
         printf("Simetrica: %c \n", isSymmetric);
         printf("Anti-simetrica: %c \n", isAntiSymmetric);
-        printPairs(symmetric, -2, nodeIdentifiers);
+        printPairs(symmetric, -2, nodeIdentifiers, matrixLength);
         printf("Assimetrica: %c \n", isAsymmetric);
     }
 
     if (isAntiSymmetric == 'V')
     {
         printf("Simetrica: %c \n", isSymmetric);
-        printPairs(symmetric, -1, nodeIdentifiers);
+        printPairs(symmetric, -1, nodeIdentifiers, matrixLength);
         printf("Anti-simetrica: %c \n", isAntiSymmetric);
         printf("Assimetrica: %c \n", isAsymmetric);
     }
@@ -139,62 +138,107 @@ void printSymmetryCases(int **symmetric, char *cases, int *nodeIdentifiers)
     if (isAsymmetric == 'V')
     {
         printf("Simetrica: %c \n", isSymmetric);
-        printPairs(symmetric, -1, nodeIdentifiers);
+        printPairs(symmetric, -1, nodeIdentifiers, matrixLength);
         printf("Anti-simetrica: %c \n", isAntiSymmetric);
-        printPairs(symmetric, -2, nodeIdentifiers);
+        printPairs(symmetric, -2, nodeIdentifiers, matrixLength);
         printf("Assimetrica: %c \n", isAsymmetric);
     }
 }
 
-// TODO
-// char resolveTransitivity()
-// {
-//     for (int i = 0; i < matrixLength; i++)
-//     {
-//         for (int j = 0; j < matrixLength; j++)
-//         {
-//             int a, b;
-//             if (i != j && matrix[i][j] == 1)
-//             {
-//                 a = i;
-//                 b = j;
-//                 for (int c = 0; c < matrixLength; c++)
-//                 {
-//                     if (matrix[j][c] == 1 && matrix[a][c] = 1)
-//                     {
-//                         return 'V';
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-
-int resolveCases(int **matrix, int matrixLength, int *nodeIdentifiers)
+void printReflexivityPairs(int **matrix, int matrixLength)
 {
-    char reflexive = isReflexive(matrix, matrixLength);
-    printf("%c\n", reflexive);
-    int **reflexivePairs = getReflexivePairs(nodeIdentifiers, matrixLength);
-    printf("Reflexive Pairs: ");
     for (int i = 0; i < matrixLength; i++)
     {
         printf("(");
         for (int j = 0; j < 2; j++)
         {
-            j == 0 ? printf("%d,", reflexivePairs[i][j]) : printf("%d", reflexivePairs[i][j]);
+            j == 0 ? printf("%d,", matrix[i][j]) : printf("%d", matrix[i][j]);
         }
         printf("); ");
     }
+}
+void resolveReflexivityCases(int **matrix, int matrixLength, char reflexive, int *nodeIdentifiers)
+{
+    int **reflexivePairs = getReflexivePairs(nodeIdentifiers, matrixLength);
+    if (reflexive == 'V')
+    {
+        printf("Reflexiva: V\n");
+        printf("Irreflexiva: F\n");
+        printReflexivityPairs(matrix, matrixLength);
+        printf("\n");
+    }
+    if (reflexive == 'F')
+    {
+        printf("Reflexiva: F\n");
+        printReflexivityPairs(matrix, matrixLength);
+        printf("\n");
+        printf("Irreflexiva: V\n");
+    }
+}
 
-    printf("\n");
+void resolveEquivalenceRelation(char reflexive, char *cases, char transitive)
+{
+    printf("Relação de equivalência: ");
+    if (reflexive == 'V' && cases[0] == 'V' && transitive == 'V')
+    {
+        printf("V\n");
+    }
+    printf("F\n");
+}
+
+void resolvePartialOrder(char reflexive, char *cases, char transitive)
+{
+    printf("Relação de equivalência: ");
+    if (reflexive == 'V' && cases[1] == 'V' && transitive == 'V')
+    {
+        printf("V\n");
+    }
+    printf("F\n");
+}
+
+void resolveTransitiveClosure(int **matrix, int matrixLength, int *nodeIdentifiers)
+{
+    printf("Fecho transitivo da relação: ");
+    printPairs(matrix, 1, nodeIdentifiers, matrixLength);
+}
+
+// TODO 
+char resolveTransitivity(int **matrix, int matrixLength)
+{
+    for (int i = 0; i < matrixLength; i++)
+    {
+        for (int j = 0; j < matrixLength; j++)
+        {
+            for (int k = 0; k < matrixLength; k++)
+            {
+                // !review this if
+                if ((i != j && j != k) && (matrix[i][j] == 1 && matrix[j][k] == 1 && matrix[i][k] == 1))
+                {
+                    return 'V';
+                }
+            }
+        }
+    }
+    return 'F';
+}
+
+int resolveCases(int **matrix, int matrixLength, int *nodeIdentifiers)
+{
+    char reflexive = isReflexive(matrix, matrixLength);
+    resolveReflexivityCases(matrix, matrixLength, reflexive, nodeIdentifiers);
 
     int **symmetricMatrix = resolveSymmetryMatrix(matrix, matrixLength);
-    char cases[3];
-    resolveSymmetryCases(symmetricMatrix, matrixLength, cases);
-    printSymmetryCases(symmetricMatrix, cases, nodeIdentifiers);
+    char symmetricCases[3];
+    resolveSymmetryCases(symmetricMatrix, matrixLength, symmetricCases);
+    printSymmetryCases(symmetricMatrix, symmetricCases, nodeIdentifiers, matrixLength);
 
     // TODO
-    // char isTransitive = resolveTransitivity();
+    char isTransitive = resolveTransitivity(matrix, matrixLength);
+    printf("Transitiva: %c\n", isTransitive);
+    
+    resolveEquivalenceRelation(reflexive, symmetricCases, isTransitive);
+    resolvePartialOrder(reflexive, symmetricCases, isTransitive);
+    resolveTransitiveClosure(matrix, matrixLength, nodeIdentifiers);
 }
 
 int *getNodeIndetifiers(int len, char *buffer)
@@ -226,7 +270,7 @@ int main()
 
     char fileLine[20];
 
-    myFile = fopen("input.txt", "r");
+    myFile = fopen("input2.txt", "r");
 
     while (!feof(myFile))
     {
@@ -234,6 +278,7 @@ int main()
         if (isFirstLine == 1)
         {
             myMatrixLength = fileLine[0] - '0';
+            // printf("%d", myMatrixLength);
             nodeIdentifiers = getNodeIndetifiers(myMatrixLength, fileLine);
             adjcencyMatrix = (int **)malloc(sizeof(int *) * myMatrixLength);
             for (int i = 0; i < myMatrixLength; i++)
@@ -248,11 +293,11 @@ int main()
             char *columnNumber;
             lineNumber = strtok(fileLine, " ");
             columnNumber = strtok(NULL, " ");
+            // printf("%s", lineNumber);
             if (lineNumber != NULL && columnNumber != NULL)
             {
-                int linePosition = atoi(lineNumber) - 3;
-                int columnPosition = atoi(columnNumber) - 3;
-                // printf("%d, %d\n", linePosition, columnPosition);
+                int linePosition = atoi(lineNumber) - 20;
+                int columnPosition = atoi(columnNumber) - 20;
                 adjcencyMatrix[linePosition][columnPosition] = 1;
             }
         }
