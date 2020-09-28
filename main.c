@@ -202,7 +202,7 @@ void resolveTransitiveClosure(int **matrix, int matrixLength, int *nodeIdentifie
     printPairs(matrix, 1, nodeIdentifiers, matrixLength);
 }
 
-// TODO 
+// TODO
 char resolveTransitivity(int **matrix, int matrixLength)
 {
     for (int i = 0; i < matrixLength; i++)
@@ -235,7 +235,7 @@ int resolveCases(int **matrix, int matrixLength, int *nodeIdentifiers)
     // TODO
     char isTransitive = resolveTransitivity(matrix, matrixLength);
     printf("Transitiva: %c\n", isTransitive);
-    
+
     resolveEquivalenceRelation(reflexive, symmetricCases, isTransitive);
     resolvePartialOrder(reflexive, symmetricCases, isTransitive);
     resolveTransitiveClosure(matrix, matrixLength, nodeIdentifiers);
@@ -257,6 +257,19 @@ int *getNodeIndetifiers(int len, char *buffer)
     }
 
     return nodes;
+}
+
+int getAdjacencyValue(int *nodeIdentifiers, int length)
+{
+    int smaller = nodeIdentifiers[0];
+    for (int i = 1; i < length; i++)
+    {
+        if (nodeIdentifiers[i] < smaller)
+        {
+            smaller = nodeIdentifiers[i];
+        }
+    }
+    return smaller;
 }
 
 int main()
@@ -293,6 +306,7 @@ int main()
             char *columnNumber;
             lineNumber = strtok(fileLine, " ");
             columnNumber = strtok(NULL, " ");
+            int adjacencyValue = getAdjacencyValue(nodeIdentifiers, myMatrixLength);
             // printf("%s", lineNumber);
             if (lineNumber != NULL && columnNumber != NULL)
             {
