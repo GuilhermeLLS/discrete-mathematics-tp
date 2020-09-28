@@ -164,13 +164,13 @@ void resolveReflexivityCases(int **matrix, int matrixLength, char reflexive, int
     {
         printf("Reflexiva: V\n");
         printf("Irreflexiva: F\n");
-        printReflexivityPairs(matrix, matrixLength);
+        printReflexivityPairs(reflexivePairs, matrixLength);
         printf("\n");
     }
     if (reflexive == 'F')
     {
         printf("Reflexiva: F\n");
-        printReflexivityPairs(matrix, matrixLength);
+        printReflexivityPairs(reflexivePairs, matrixLength);
         printf("\n");
         printf("Irreflexiva: V\n");
     }
