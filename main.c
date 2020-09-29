@@ -291,7 +291,6 @@ int main()
         if (isFirstLine == 1)
         {
             myMatrixLength = fileLine[0] - '0';
-            // printf("%d", myMatrixLength);
             nodeIdentifiers = getNodeIndetifiers(myMatrixLength, fileLine);
             adjcencyMatrix = (int **)malloc(sizeof(int *) * myMatrixLength);
             for (int i = 0; i < myMatrixLength; i++)
@@ -307,7 +306,6 @@ int main()
             lineNumber = strtok(fileLine, " ");
             columnNumber = strtok(NULL, " ");
             int adjacencyValue = getAdjacencyValue(nodeIdentifiers, myMatrixLength);
-            // printf("%s", lineNumber);
             if (lineNumber != NULL && columnNumber != NULL)
             {
                 int linePosition = atoi(lineNumber) - 20;
