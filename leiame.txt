@@ -8,6 +8,6 @@ formato o qual podemos encontrar no arquivo input-padrão.txt. (Você também po
 
 Depois de organizar e salvar nesse mesmo diretório o seu arquivo chamado input.txt, basta abrir o terminal e executar
 - gcc main.c -o tp
-Isso irá gerar um arquivo tp.out e para executar esse arquivo .out, basta realizar o comando
-- ./tp.out
+Isso irá gerar um arquivo tp e para executar esse arquivo, basta realizar o comando
+- ./tp
 Depois disso, as saídas do programa aparecerão no terminal e o processo terá de execução terá sido terminado. 
