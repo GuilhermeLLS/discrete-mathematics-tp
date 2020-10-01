@@ -3,9 +3,11 @@ Para mais informações de como instalar o gcc:
     - Windows (http://www.mingw.org/wiki/InstallationHOWTOforMinGW)
     - Linux (https://linuxize.com/post/how-to-install-gcc-compiler-on-ubuntu-18-04/)
 
-Para rodar o programa, basta possuir um arquivo de input no formato padrão, formato o qual podemos encontrar no arquivo input-padrão.txt. 
+Para rodar o programa, basta possuir um arquivo de input no formato padrão,
+formato o qual podemos encontrar no arquivo input-padrão.txt. (Você também pode observar os arquivos input.txt e input2.txt)
+
 Depois de organizar e salvar nesse mesmo diretório o seu arquivo chamado input.txt, basta abrir o terminal e executar
-- gcc main.c
-Isso irá gerar um arquivo a.out e para executar esse arquivo .out, basta realizar o comando
-- ./a.out
+- gcc main.c -o tp
+Isso irá gerar um arquivo tp.out e para executar esse arquivo .out, basta realizar o comando
+- ./tp.out
 Depois disso, as saídas do programa aparecerão no terminal e o processo terá de execução terá sido terminado. 
