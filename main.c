@@ -247,7 +247,7 @@ void resolveTransitiveClosure(int **matrix, int matrixLength, NodeIdentifiers *n
     printPairs(matrix, 1, nodeIdentifiers, matrixLength);
 }
 
-char resolveTransitivity(int **matrix, int matrixLength)
+char isTransitive(int **matrix, int matrixLength)
 {
     for (int i = 0; i < matrixLength; i++)
     {
@@ -318,12 +318,12 @@ int resolveCases(int **matrix, int matrixLength, NodeIdentifiers *nodeIdentifier
     resolveSymmetryCases(symmetricMatrix, matrixLength, symmetricCases);
     printSymmetryCases(symmetricMatrix, symmetricCases, nodeIdentifiers, matrixLength);
 
-    char isTransitive = resolveTransitivity(matrix, matrixLength);
+    char transitive = isTransitive(matrix, matrixLength);
     int **missingTransitiveCases = resolveTransitivityCases(matrix, matrixLength);
-    printTransitiveCases(missingTransitiveCases, matrixLength, nodeIdentifiers, isTransitive);
+    printTransitiveCases(missingTransitiveCases, matrixLength, nodeIdentifiers, transitive);
 
-    resolveEquivalenceRelation(reflexive, symmetricCases, isTransitive);
-    resolvePartialOrder(reflexive, symmetricCases, isTransitive);
+    resolveEquivalenceRelation(reflexive, symmetricCases, transitive);
+    resolvePartialOrder(reflexive, symmetricCases, transitive);
     resolveTransitiveClosure(matrix, matrixLength, nodeIdentifiers, missingTransitiveCases);
 }
 
