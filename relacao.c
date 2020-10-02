@@ -370,7 +370,7 @@ int main()
 
     char fileLine[20];
 
-    myFile = fopen("input2.txt", "r");
+    myFile = fopen("input.txt", "r");
 
     while (!feof(myFile))
     {

@@ -6,9 +6,9 @@ Para mais informações de como instalar o gcc:
 Para rodar o programa, basta possuir um arquivo de input no formato padrão,
 formato o qual podemos encontrar no arquivo input-padrão.txt. (Você também pode observar os arquivos input.txt e input2.txt)
 
-Depois de organizar e salvar ,nesse mesmo diretório, o seu arquivo chamado input.txt, basta abrir o terminal e ir para o diretório que você salvou seu programa
+Depois de organizar e salvar, nesse mesmo diretório, o seu arquivo chamado input.txt, basta abrir o terminal e ir para o diretório que você salvou seu programa
 (e seus arquivos de input) e executar
-- gcc main.c -o tp
+- gcc relacao.c -o tp
 Isso irá gerar um arquivo chamado tp(do tipo bin) e para executar esse arquivo, basta realizar o comando
 - ./tp
 Depois disso, as saídas do programa aparecerão no terminal e o processo terá de execução terá sido terminado. 
